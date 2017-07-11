@@ -16,7 +16,9 @@ class CreateRegulationsTable extends Migration
 	{
 		Schema::create('regulations', function(Blueprint $table) {
             $table->increments('id');
-
+            $table->string('nome');
+            $table->longText('descricao');
+            $table->boolean('status');
             $table->timestamps();
 		});
 	}

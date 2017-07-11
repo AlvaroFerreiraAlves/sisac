@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->integer('id_courses')->unsigned();
+            $table->foreign('id_courses')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 
