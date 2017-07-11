@@ -17,8 +17,8 @@ class CreateUserTypesUsersTable extends Migration
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('id_type_user')->unsigned();
-            $table->foreign('id_type_user')->references('id')->on('type_users')->onDelete('cascade');
+           // $table->integer('id_type_user')->unsigned();
+            //$table->foreign('id_type_user')->references('id')->on('type_users')->onDelete('cascade');
             $table->boolean('status');
             $table->timestamps();
 		});
