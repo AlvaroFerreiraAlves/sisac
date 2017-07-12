@@ -20,7 +20,9 @@ $factory->define(App\Entities\User::class, function (Faker\Generator $faker) {
         'matricula' =>$faker->numberBetween(1,9),
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
+        'status' => $faker->boolean,
         'remember_token' => str_random(10),
+        'id_curso' => App\Entities\Course::all()->random()->id,
     ];
 });
 
@@ -32,7 +34,7 @@ $factory->define(App\Entities\Course::class, function (Faker\Generator $faker) {
         'descricao' => $faker->sentence,
         'carga_horaria_atividades'=>$faker->numberBetween(1,9),
         'status' => $faker->boolean,
-        'id_instutions' => $faker->numberBetween(1,10),
+
     ];
 });
 
@@ -43,12 +45,13 @@ $factory->define(App\Entities\Activity::class, function (Faker\Generator $faker)
         'descricao' => $faker->sentence,
         'documento' =>$faker->sentence,
         'qt_horas' =>$faker->numberBetween(0,12),
-        'status'=> $faker->numberBetween(0,1),
-        'situacao'=>$faker->numberBetween(0,1),
-        'activity_types_id'=> $faker->numberBetween(1,100),
-        'users_id'=> $faker->numberBetween(1,100),
-        'users_courses_id'=> $faker->numberBetween(1,100),
-        'regulations_id'=> $faker->numberBetween(1,100),
+        'status' => $faker->boolean,
+        'situacao' => $faker->boolean,
+        'id_tipo_atividade'=> App\Entities\ActivityType::all()->random()->id,
+        'id_usuario'=> App\Entities\User::all()->random()->id,
+        'id_curso_usuario'=> App\Entities\User::all()->random()->id,
+        'id_regulamento'=> App\Entities\Regulation::all()->random()->id,
+
 
     ];
 });
@@ -56,14 +59,14 @@ $factory->define(App\Entities\ActivityType::class, function (Faker\Generator $fa
     return [
         'nome' => $faker->name,
         'descricao' => $faker->sentence,
-        'status'=> $faker->numberBetween(0,1),
+        'status' => $faker->boolean,
     ];
 });
 $factory->define(App\Entities\Regulation::class, function (Faker\Generator $faker) {
     return [
         'nome' => $faker->name,
         'descricao' => $faker->sentence,
-        'status'=> $faker->numberBetween(0,1),
+        'status' => $faker->boolean,
     ];
 });
 $factory->define(App\Entities\UserType::class, function (Faker\Generator $faker) {
@@ -80,8 +83,8 @@ $factory->define(App\Entities\UserTypesUser::class, function (Faker\Generator $f
 
 
     return [
-        'id_user' => $faker->numberBetween(1,100),
-        'id_type_user' => $faker->numberBetween(1,5),
+        'id_usuario' => App\Entities\User::all()->random()->id,
+        'id_tipo_usuario' => App\Entities\UserType::all()->random()->id,
         'status' => $faker->boolean,
     ];
 });
