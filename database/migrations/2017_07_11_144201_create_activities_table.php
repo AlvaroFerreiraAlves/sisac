@@ -31,7 +31,7 @@ class CreateActivitiesTable extends Migration
 
             // DANDO ERRO NA CRIAÇÃO DA MIGRATE POR REFERENCIAR users_id DUAS VEZES
             $table->integer('id_curso_usuario')->unsigned();
-            $table->foreign('id_curso_usuario')->references('id_cursos')->on('users')->onDelete('cascade');
+            $table->foreign('id_curso_usuario')->references('id_curso')->on('users')->onDelete('cascade');
 
             $table->integer('id_regulamentos')->unsigned();
             $table->foreign('id_regulamentos')->references('id')->on('regulations')->onDelete('cascade');

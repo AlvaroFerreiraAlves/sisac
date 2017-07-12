@@ -16,8 +16,8 @@ $factory->define(App\Entities\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'nome' => $faker->name,
-        'matricula' =>$faker->numberBetween(1,9),
+        'name' => $faker->name,
+        'matricula' =>$faker->numberBetween(1,9999999999),
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'status' => $faker->boolean,
