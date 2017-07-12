@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 // DANDO ERRO NA CRIAAÇÃO DA MIGRATE
-//            $table->integer('id_courses')->unsigned();
-//            $table->foreign('id_courses')->references('id')->on('courses')->onDelete('cascade');
+           $table->integer('id_cursos')->unsigned();
+            $table->foreign('id_cursos')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

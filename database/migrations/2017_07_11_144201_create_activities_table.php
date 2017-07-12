@@ -23,18 +23,18 @@ class CreateActivitiesTable extends Migration
             $table->boolean('situacao');
             $table->timestamps();
 
-            $table->integer('activity_types_id')->unsigned();
-            $table->foreign('activity_types_id')->references('id')->on('activity_types')->onDelete('cascade');
+            $table->integer('id_tipos_atividades')->unsigned();
+            $table->foreign('id_tipos_atividades')->references('id')->on('activity_types')->onDelete('cascade');
 
-            $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('id_usuario')->unsigned();
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
 
             // DANDO ERRO NA CRIAÇÃO DA MIGRATE POR REFERENCIAR users_id DUAS VEZES
-           // $table->integer('users_id')->unsigned();
-           // $table->foreign('users_courses_id')->references('Courses_id')->on('users')->onDelete('cascade');
+            $table->integer('id_curso_usuario')->unsigned();
+            $table->foreign('id_curso_usuario')->references('id_cursos')->on('users')->onDelete('cascade');
 
-            $table->integer('regulations_id')->unsigned();
-            $table->foreign('regulations_id')->references('id')->on('regulations')->onDelete('cascade');
+            $table->integer('id_regulamentos')->unsigned();
+            $table->foreign('id_regulamentos')->references('id')->on('regulations')->onDelete('cascade');
 
 		});
 	}
