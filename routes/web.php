@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('tipo-atividade/list','ActivityTypesController@index');
+Route::post('tipo-atividade/create','ActivityTypesController@store');
+Route::delete('tipo-atividade/{id}/destroy','ActivityTypesController@destroy');
+
