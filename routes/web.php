@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::get('tipo-atividade/list','ActivityTypesController@index');
 Route::post('tipo-atividade/create','ActivityTypesController@store');
+Route::put('tipo-atividade/{id}/update','ActivityTypesController@update');
 Route::delete('tipo-atividade/{id}/destroy','ActivityTypesController@destroy');
 
