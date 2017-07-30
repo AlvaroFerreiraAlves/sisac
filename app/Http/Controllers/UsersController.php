@@ -60,14 +60,22 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->repository->create($request->all());
+            $user = $this->repository->create([
+                'name' => $request['name'],
+                'matricula' => $request['matricula'],
+                'email' => $request['email'],
+                'password' => bcrypt($request['password']),
+                'status' => $request['status'],
+                'id_curso' => $request['id_curso']
+            ]);
+
 
             $response = [
                 'message' => 'User created.',

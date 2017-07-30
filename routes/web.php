@@ -30,4 +30,15 @@ Route::post('cursos/create','CoursesController@store');
 Route::put('cursos/{id}/update','CoursesController@update');
 Route::delete('cursos/{id}/destroy','CoursesController@destroy');
 
+Route::get('tipo-usuario/list','UserTypesController@index');
+Route::post('tipo-usuario/create','UserTypesController@store');
+Route::put('tipo-usuario/{id}/update','UserTypesController@update');
+Route::delete('tipo-usuario/{id}/destroy','UserTypesController@destroy');
+
+Route::get('usuario/list','UsersController@index');
+Route::post('usuario/create','UsersController@store');
+Route::put('usuario/{id}/update','UsersController@update');
+Route::delete('usuario/{id}/destroy','UsersController@destroy');
+
+
 
