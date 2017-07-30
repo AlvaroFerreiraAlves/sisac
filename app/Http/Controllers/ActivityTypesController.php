@@ -50,7 +50,7 @@ class ActivityTypesController extends Controller
             ]);
         }
 
-        return view('activityTypes.index', compact('activityTypes'));
+        return $activityTypes;
     }
 
     /**
@@ -60,7 +60,7 @@ class ActivityTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ActivityTypeCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -139,7 +139,7 @@ class ActivityTypesController extends Controller
      *
      * @return Response
      */
-    public function update(ActivityTypeUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {
