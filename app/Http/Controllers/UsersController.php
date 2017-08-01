@@ -50,7 +50,7 @@ class UsersController extends Controller
             ]);
         }
 
-        return view('users.index', compact('users'));
+        return $users;
     }
 
     /**
@@ -75,6 +75,11 @@ class UsersController extends Controller
                 'status' => $request['status'],
                 'id_curso' => $request['id_curso']
             ]);
+
+
+
+
+            $user->tipoUsuario()->attach(['id_tipo_usuario'=>$request['id_tipo_usuario']]);
 
 
             $response = [

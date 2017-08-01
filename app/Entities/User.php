@@ -23,7 +23,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
+   /* protected $hidden = [
         'password', 'remember_token',
-    ];
+    ];*/
+
+   public function tipoUsuario(){
+       return $this->belongsToMany(UserType::class, 'user_types_users', 'id_usuario', 'id_tipo_usuario');
+   }
 }

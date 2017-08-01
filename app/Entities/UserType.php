@@ -12,4 +12,8 @@ class UserType extends Model implements Transformable
 
     protected $fillable = [];
 
+    public function users(){
+        return $this->belongsToMany(User::class, 'user_types_users', 'id_tipo_usuario', '	id_usuario');
+    }
+
 }
