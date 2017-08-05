@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTypesTable extends Migration
+class CreateRequestsTable extends Migration
 {
 
 	/**
@@ -13,12 +13,15 @@ class CreateUserTypesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('user_types', function(Blueprint $table) {
+		Schema::create('requests', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
-            $table->longText('descricao');
+            $table->string('name');
+            $table->string('matricula')->unique();
+            $table->string('email')->unique();
+            $table->string('cpf')->unique();
+            $table->string('password');
             $table->boolean('status');
-
+            $table->integer('id_curso');
 
             $table->timestamps();
 		});
@@ -31,7 +34,7 @@ class CreateUserTypesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('user_types');
+		Schema::drop('requests');
 	}
 
 }

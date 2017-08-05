@@ -60,7 +60,7 @@ class UserTypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserTypeCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -139,7 +139,7 @@ class UserTypesController extends Controller
      *
      * @return Response
      */
-    public function update(UserTypeUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {

@@ -7,26 +7,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Http\Requests\RequestCreateRequest;
+use App\Http\Requests\RequestUpdateRequest;
+use App\Repositories\RequestRepository;
+use App\Validators\RequestValidator;
 
 
-class UsersController extends Controller
+class RequestsController extends Controller
 {
 
     /**
-     * @var UserRepository
+     * @var RequestRepository
      */
     protected $repository;
 
     /**
-     * @var UserValidator
+     * @var RequestValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(RequestRepository $repository, RequestValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -41,50 +41,37 @@ class UsersController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all();
+        $requests = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $users,
+                'data' => $requests,
             ]);
         }
 
-        return $users;
+        return view('requests.index', compact('requests'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param  RequestCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestCreateRequest $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->repository->create([
-                'name' => $request['name'],
-                'matricula' => $request['matricula'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'status' => $request['status'],
-                'id_curso' => $request['id_curso']
-            ]);
-
-
-
-
-            $user->tipoUsuario()->attach(['id_tipo_usuario'=>$request['id_tipo_usuario']]);
-
+            $request = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'message' => 'Request created.',
+                'data'    => $request->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -115,16 +102,16 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->repository->find($id);
+        $request = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $user,
+                'data' => $request,
             ]);
         }
 
-        return view('users.show', compact('user'));
+        return view('requests.show', compact('request'));
     }
 
 
@@ -138,39 +125,32 @@ class UsersController extends Controller
     public function edit($id)
     {
 
-        $user = $this->repository->find($id);
+        $request = $this->repository->find($id);
 
-        return view('users.edit', compact('user'));
+        return view('requests.edit', compact('request'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
+     * @param  RequestUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(RequestUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update([
-                'name' => $request['name'],
-                'matricula' => $request['matricula'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-                'status' => $request['status'],
-                'id_curso' => $request['id_curso']
-            ], $id);
+            $request = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'message' => 'Request updated.',
+                'data'    => $request->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -208,11 +188,11 @@ class UsersController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'User deleted.',
+                'message' => 'Request deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return redirect()->back()->with('message', 'Request deleted.');
     }
 }

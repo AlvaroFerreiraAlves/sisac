@@ -21,20 +21,19 @@ class CreateActivitiesTable extends Migration
             $table->integer('qt_horas');
             $table->boolean('status');
             $table->boolean('situacao');
+            $table->integer('id_tipo_atividade')->unsigned();
+            $table->integer('id_processo')->unsigned();
+
+            $table->foreign('id_tipo_atividade')
+                ->references('id')->on('activity_types')
+                ->onDelete('cascade');
+
+            $table->foreign('id_processo')
+                ->references('id')->on('processes')
+                ->onDelete('cascade');
+
             $table->timestamps();
 
-            $table->integer('id_tipo_atividade')->unsigned();
-            $table->foreign('id_tipo_atividade')->references('id')->on('activity_types')->onDelete('cascade');
-
-            $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-
-            // DANDO ERRO NA CRIAÇÃO DA MIGRATE POR REFERENCIAR users_id DUAS VEZES
-            $table->integer('id_curso_usuario')->unsigned();
-            $table->foreign('id_curso_usuario')->references('id_curso')->on('users')->onDelete('cascade');
-
-            $table->integer('id_regulamento')->unsigned();
-            $table->foreign('id_regulamento')->references('id')->on('regulations')->onDelete('cascade');
 
 		});
 	}
