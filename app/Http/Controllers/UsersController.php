@@ -77,9 +77,7 @@ class UsersController extends Controller
             ]);
 
 
-
-
-            $user->tipoUsuario()->attach(['id_tipo_usuario'=>$request['id_tipo_usuario']]);
+            $user->tipoUsuario()->sync(['id_tipo_usuario'=>$request['id_tipo_usuario']]);
 
 
             $response = [
