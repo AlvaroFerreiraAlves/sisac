@@ -7,26 +7,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserTypeCreateRequest;
-use App\Http\Requests\UserTypeUpdateRequest;
-use App\Repositories\UserTypeRepository;
-use App\Validators\UserTypeValidator;
+use App\Http\Requests\ProcessCreateRequest;
+use App\Http\Requests\ProcessUpdateRequest;
+use App\Repositories\ProcessRepository;
+use App\Validators\ProcessValidator;
 
 
-class UserTypesController extends Controller
+class ProcessesController extends Controller
 {
 
     /**
-     * @var UserTypeRepository
+     * @var ProcessRepository
      */
     protected $repository;
 
     /**
-     * @var UserTypeValidator
+     * @var ProcessValidator
      */
     protected $validator;
 
-    public function __construct(UserTypeRepository $repository, UserTypeValidator $validator)
+    public function __construct(ProcessRepository $repository, ProcessValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -41,37 +41,37 @@ class UserTypesController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $userTypes = $this->repository->all();
+        $processes = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $userTypes,
+                'data' => $processes,
             ]);
         }
 
-        return view('userTypes.index', compact('userTypes'));
+        return view('processes.index', compact('processes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserTypeCreateRequest $request
+     * @param  ProcessCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProcessCreateRequest $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $userType = $this->repository->create($request->all());
+            $process = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'UserType created.',
-                'data'    => $userType->toArray(),
+                'message' => 'Process created.',
+                'data'    => $process->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -102,16 +102,16 @@ class UserTypesController extends Controller
      */
     public function show($id)
     {
-        $userType = $this->repository->find($id);
+        $process = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $userType,
+                'data' => $process,
             ]);
         }
 
-        return view('userTypes.show', compact('userType'));
+        return view('processes.show', compact('process'));
     }
 
 
@@ -125,32 +125,32 @@ class UserTypesController extends Controller
     public function edit($id)
     {
 
-        $userType = $this->repository->find($id);
+        $process = $this->repository->find($id);
 
-        return view('userTypes.edit', compact('userType'));
+        return view('processes.edit', compact('process'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserTypeUpdateRequest $request
+     * @param  ProcessUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ProcessUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $userType = $this->repository->update($request->all(), $id);
+            $process = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'UserType updated.',
-                'data'    => $userType->toArray(),
+                'message' => 'Process updated.',
+                'data'    => $process->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -188,11 +188,11 @@ class UserTypesController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'UserType deleted.',
+                'message' => 'Process deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'UserType deleted.');
+        return redirect()->back()->with('message', 'Process deleted.');
     }
 }

@@ -150,14 +150,21 @@ class UsersController extends Controller
      *
      * @return Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update($request->all(), $id);
+            $user = $this->repository->update([
+                'name' => $request['name'],
+                'matricula' => $request['matricula'],
+                'email' => $request['email'],
+                'password' => bcrypt($request['password']),
+                'status' => $request['status'],
+                'id_curso' => $request['id_curso']
+            ], $id);
 
             $response = [
                 'message' => 'User updated.',

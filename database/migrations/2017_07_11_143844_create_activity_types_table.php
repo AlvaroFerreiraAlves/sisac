@@ -17,7 +17,14 @@ class CreateActivityTypesTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->longText('descricao');
+            $table->integer('qt_min');
             $table->boolean('status');
+            $table->integer('id_regulamento')->unsigned();
+
+            $table->foreign('id_regulamento')
+                ->references('id')->on('regulations')
+                ->onDelete('cascade');
+
             $table->timestamps();
 		});
 	}

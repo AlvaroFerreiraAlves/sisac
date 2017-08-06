@@ -15,11 +15,17 @@ class CreateUserTypesUsersTable extends Migration
 	{
 		Schema::create('user_types_users', function(Blueprint $table) {
             $table->integer('id_usuario')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-
             $table->integer('id_tipo_usuario')->unsigned();
-            $table->foreign('id_tipo_usuario')->references('id')->on('user_types')->onDelete('cascade');
-            $table->boolean('status');
+
+            $table->foreign('id_usuario')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
+
+            $table->foreign('id_tipo_usuario')
+                ->references('id')->on('user_types')
+                ->onDelete('cascade');
+
             $table->timestamps();
 		});
 	}
