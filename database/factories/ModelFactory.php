@@ -12,15 +12,15 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Entities\Regulation::class, function (Faker\Generator $faker) {
+/*$factory->define(App\Entities\Regulation::class, function (Faker\Generator $faker) {
     return [
         'nome' => $faker->name,
         'descricao' => $faker->sentence,
         'status' => $faker->boolean,
     ];
-});
+});*/
 
-$factory->define(App\Entities\Course::class, function (Faker\Generator $faker) {
+/*$factory->define(App\Entities\Course::class, function (Faker\Generator $faker) {
 
 
     return [
@@ -30,7 +30,7 @@ $factory->define(App\Entities\Course::class, function (Faker\Generator $faker) {
         'status' => $faker->boolean,
 
     ];
-});
+});*/
 
 
 
@@ -39,8 +39,9 @@ $factory->define(App\Entities\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'matricula' =>$faker->numberBetween(1,9999999999),
+        'matricula' =>$faker->numberBetween(1,99999999999999),
         'email' => $faker->unique()->safeEmail,
+        'cpf' => $faker->unique()->numberBetween(1,99999999999),
         'password' => $password ?: $password = bcrypt('secret'),
         'status' => $faker->boolean,
         'remember_token' => str_random(10),
@@ -48,15 +49,15 @@ $factory->define(App\Entities\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Entities\ActivityType::class, function (Faker\Generator $faker) {
+/*$factory->define(App\Entities\ActivityType::class, function (Faker\Generator $faker) {
     return [
         'nome' => $faker->name,
         'descricao' => $faker->sentence,
         'status' => $faker->boolean,
     ];
-});
+});*/
 
-$factory->define(App\Entities\UserType::class, function (Faker\Generator $faker) {
+/*$factory->define(App\Entities\UserType::class, function (Faker\Generator $faker) {
 
 
     return [
@@ -64,7 +65,7 @@ $factory->define(App\Entities\UserType::class, function (Faker\Generator $faker)
         'nome' => $faker->sentence,
         'descricao' => $faker->sentence,
     ];
-});
+});*/
 
 $factory->define(App\Entities\UserTypesUser::class, function (Faker\Generator $faker) {
 
@@ -72,9 +73,22 @@ $factory->define(App\Entities\UserTypesUser::class, function (Faker\Generator $f
     return [
         'id_usuario' => App\Entities\User::all()->random()->id,
         'id_tipo_usuario' => App\Entities\UserType::all()->random()->id,
-        'status' => $faker->boolean,
     ];
 });
+
+$factory->define(App\Entities\Process::class, function (Faker\Generator $faker) {
+    return [
+        'id_professor' => App\Entities\UserTypesUser::all()->random()->id_usuario,
+        'id_coordenador' => App\Entities\UserTypesUser::all()->random()->id_usuario,
+        'matricula' =>$faker->numberBetween(1,99999999999999),
+        'situacao' =>$faker->sentence,
+        'status' =>$faker->boolean,
+        'id_regulamento' => App\Entities\Regulation::all()->random()->id,
+        'id_usuario' => App\Entities\User::all()->random()->id,
+        'id_curso_usuario'=> App\Entities\User::all()->random()->id_curso,
+    ];
+});
+
 
 
 $factory->define(App\Entities\Activity::class, function (Faker\Generator $faker) {
@@ -82,13 +96,12 @@ $factory->define(App\Entities\Activity::class, function (Faker\Generator $faker)
         'titulo' => $faker->name,
         'descricao' => $faker->sentence,
         'documento' =>$faker->sentence,
-        'qt_horas' =>$faker->numberBetween(0,12),
+        'qt_horas' =>$faker->numberBetween(0,999),
         'status' => $faker->boolean,
         'situacao' => $faker->boolean,
         'id_tipo_atividade'=> App\Entities\ActivityType::all()->random()->id,
-        'id_usuario'=> App\Entities\User::all()->random()->id,
-        'id_curso_usuario'=> App\Entities\User::all()->random()->id_curso,
-        'id_regulamento'=> App\Entities\Regulation::all()->random()->id,
+        'id_processo'=> App\Entities\Process::all()->random()->id,
+
 
 
     ];

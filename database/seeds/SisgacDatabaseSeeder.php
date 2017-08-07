@@ -16,38 +16,6 @@ class SisgacDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /* factory(App\Entities\Regulation::class,3)->create();
-
-         factory(App\Entities\User::class,5)->create();
-
-
-         factory(App\Entities\UserTypesUser::class,5)->create();
-         factory(App\Entities\Activity::class,10)->create();*/
-
-        UserType::create([
-            'nome' => 'Admisnistrador',
-            'descricao' => 'admisnistrador',
-            'status' => '1',
-        ]);
-
-        UserType::create([
-            'nome' => 'Professor supervisor',
-            'descricao' => 'Professor supervisor',
-            'status' => '1',
-        ]);
-
-        UserType::create([
-            'nome' => 'Coordenador de curso',
-            'descricao' => 'Coordenador de curso',
-            'status' => '1',
-        ]);
-
-        UserType::create([
-            'nome' => 'Cores',
-            'descricao' => 'Cores',
-            'status' => '1',
-        ]);
-
         Regulation::create([
             'nome' => 'REGULAMENTO DE ATIVIDADES COMPLEMENTARES DOS CURSOS DE GRADUAÇÃO PRESENCIAIS DO IFTO',
             'descricao' => 'Aprovado pela Resolução n.º 45/2012/CONSUP/IFTO, de 19 de novembro de 2012, alterado
@@ -57,6 +25,22 @@ class SisgacDatabaseSeeder extends Seeder
                             3/2016/CONSUP/IFTO, de 24 de fevereiro de 2016.',
             'status' => '1'
         ]);
+
+        Course::create([
+            'nome' => 'Sistemas de Informação',
+            'descricao' => 'Sistemas de Informação',
+            'carga_horaria_atividades' => '100',
+            'status' => '1',
+        ]);
+
+        Course::create([
+            'nome' => 'Gestão de Tecnologia de Informção',
+            'descricao' => 'Gestão de Tecnologia de Informção',
+            'carga_horaria_atividades' => '150',
+            'status' => '1',
+        ]);
+
+        factory(App\Entities\User::class, 5)->create();
 
         ActivityType::create([
             'nome' => 'Atividades de ensino',
@@ -89,27 +73,43 @@ class SisgacDatabaseSeeder extends Seeder
             'id_regulamento' => App\Entities\Regulation::all()->random()->id,
         ]);
 
-        Course::create([
-            'nome' => 'Sistemas de Informação',
-            'descricao' => 'Sistemas de Informação',
-            'carga_horaria_atividades' => '100',
+        UserType::create([
+            'nome' => 'Admisnistrador',
+            'descricao' => 'admisnistrador',
             'status' => '1',
         ]);
 
-        Course::create([
-            'nome' => 'Gestão de Tecnologia de Informção',
-            'descricao' => 'Gestão de Tecnologia de Informção',
-            'carga_horaria_atividades' => '150',
+        UserType::create([
+            'nome' => 'Professor supervisor',
+            'descricao' => 'Professor supervisor',
             'status' => '1',
         ]);
+
+        UserType::create([
+            'nome' => 'Coordenador de curso',
+            'descricao' => 'Coordenador de curso',
+            'status' => '1',
+        ]);
+
+        UserType::create([
+            'nome' => 'Cores',
+            'descricao' => 'Cores',
+            'status' => '1',
+        ]);
+
+
+        factory(App\Entities\UserTypesUser::class, 5)->create();
+        factory(App\Entities\Process::class, 3)->create();
+        factory(App\Entities\Activity::class, 10)->create();
+
 
         Request::create([
             'name' => 'Maria de Jesus',
             'matricula' => 12345678912345,
             'email' => 'maria@maria.com',
+            'cpf' => 12345678985,
             'password' => bcrypt('123'),
             'status' => 0,
-            'remember_token' => str_random(10),
             'id_curso' => App\Entities\Course::all()->random()->id,
         ]);
 
@@ -117,9 +117,9 @@ class SisgacDatabaseSeeder extends Seeder
             'name' => 'Joao Batista',
             'matricula' => 12345678912348,
             'email' => 'joao@joao.com',
+            'cpf' => 12345678912,
             'password' => bcrypt('123'),
             'status' => 0,
-            'remember_token' => str_random(10),
             'id_curso' => App\Entities\Course::all()->random()->id,
         ]);
 
