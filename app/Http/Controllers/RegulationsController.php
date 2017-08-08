@@ -50,7 +50,7 @@ class RegulationsController extends Controller
             ]);
         }
 
-        return view('regulations.index', compact('regulations'));
+        return $regulations;
     }
 
     /**
@@ -60,7 +60,7 @@ class RegulationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(RegulationCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -111,7 +111,7 @@ class RegulationsController extends Controller
             ]);
         }
 
-        return view('regulations.show', compact('regulation'));
+        return $regulation;
     }
 
 
@@ -139,7 +139,7 @@ class RegulationsController extends Controller
      *
      * @return Response
      */
-    public function update(RegulationUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {

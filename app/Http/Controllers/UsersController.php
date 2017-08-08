@@ -29,7 +29,7 @@ class UsersController extends Controller
     public function __construct(UserRepository $repository, UserValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
 
@@ -71,18 +71,20 @@ class UsersController extends Controller
                 'name' => $request['name'],
                 'matricula' => $request['matricula'],
                 'email' => $request['email'],
+                'cpf' => $request['cpf'],
                 'password' => bcrypt($request['password']),
                 'status' => $request['status'],
                 'id_curso' => $request['id_curso']
             ]);
 
+            $dataform = $request['id_tipo_usuario'];
 
-            $user->tipoUsuario()->sync(['id_tipo_usuario'=>$request['id_tipo_usuario']]);
+            $user->tipoUsuario()->sync($dataform);
 
 
             $response = [
                 'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'data' => $user->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -94,7 +96,7 @@ class UsersController extends Controller
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }
@@ -122,7 +124,7 @@ class UsersController extends Controller
             ]);
         }
 
-        return view('users.show', compact('user'));
+        return $user;
     }
 
 
@@ -146,7 +148,7 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UserUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      */
@@ -166,9 +168,15 @@ class UsersController extends Controller
                 'id_curso' => $request['id_curso']
             ], $id);
 
+            $dataform = $request['id_tipo_usuario'];
+
+
+            $user->tipoUsuario()->sync($dataform);
+
+
             $response = [
                 'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'data' => $user->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -182,7 +190,7 @@ class UsersController extends Controller
             if ($request->wantsJson()) {
 
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }

@@ -60,7 +60,7 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CourseCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -111,7 +111,7 @@ class CoursesController extends Controller
             ]);
         }
 
-        return view('courses.show', compact('course'));
+        return $course;
     }
 
 
@@ -139,7 +139,7 @@ class CoursesController extends Controller
      *
      * @return Response
      */
-    public function update(CourseUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {

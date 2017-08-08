@@ -111,7 +111,7 @@ class ActivityTypesController extends Controller
             ]);
         }
 
-        return view('activityTypes.show', compact('activityType'));
+        return $activityType;
     }
 
 
