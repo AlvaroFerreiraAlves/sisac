@@ -7,26 +7,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\RequestCreateRequest;
-use App\Http\Requests\RequestUpdateRequest;
-use App\Repositories\RequestRepository;
-use App\Validators\RequestValidator;
+use App\Http\Requests\SolicitationCreateRequest;
+use App\Http\Requests\SolicitationUpdateRequest;
+use App\Repositories\SolicitationRepository;
+use App\Validators\SolicitationValidator;
 
 
-class RequestsController extends Controller
+class SolicitationsController extends Controller
 {
 
     /**
-     * @var RequestRepository
+     * @var SolicitationRepository
      */
     protected $repository;
 
     /**
-     * @var RequestValidator
+     * @var SolicitationValidator
      */
     protected $validator;
 
-    public function __construct(RequestRepository $repository, RequestValidator $validator)
+    public function __construct(SolicitationRepository $repository, SolicitationValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -41,37 +41,45 @@ class RequestsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $requests = $this->repository->all();
+        $solicitations = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $requests,
+                'data' => $solicitations,
             ]);
         }
 
-        return view('requests.index', compact('requests'));
+        return view('solicitations.index', compact('solicitations'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  RequestCreateRequest $request
+     * @param  SolicitationCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $request = $this->repository->create($request->all());
+            $solicitation = $this->repository->create([
+                'name' => $request['name'],
+                'matricula' => $request['matricula'],
+                'email' => $request['email'],
+                'cpf' => $request['cpf'],
+                'password' => bcrypt($request['password']),
+                'status' => $request['status'],
+                'id_curso' => $request['id_curso']
+            ]);
 
             $response = [
-                'message' => 'Request created.',
-                'data'    => $request->toArray(),
+                'message' => 'Solicitation created.',
+                'data'    => $solicitation->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -102,16 +110,16 @@ class RequestsController extends Controller
      */
     public function show($id)
     {
-        $request = $this->repository->find($id);
+        $solicitation = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $request,
+                'data' => $solicitation,
             ]);
         }
 
-        return view('requests.show', compact('request'));
+        return view('solicitations.show', compact('solicitation'));
     }
 
 
@@ -125,32 +133,32 @@ class RequestsController extends Controller
     public function edit($id)
     {
 
-        $request = $this->repository->find($id);
+        $solicitation = $this->repository->find($id);
 
-        return view('requests.edit', compact('request'));
+        return view('solicitations.edit', compact('solicitation'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  RequestUpdateRequest $request
+     * @param  SolicitationUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(RequestUpdateRequest $request, $id)
+    public function update(SolicitationUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $request = $this->repository->update($request->all(), $id);
+            $solicitation = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Request updated.',
-                'data'    => $request->toArray(),
+                'message' => 'Solicitation updated.',
+                'data'    => $solicitation->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -188,11 +196,11 @@ class RequestsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Request deleted.',
+                'message' => 'Solicitation deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Request deleted.');
+        return redirect()->back()->with('message', 'Solicitation deleted.');
     }
 }

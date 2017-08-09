@@ -5,7 +5,7 @@ use App\Entities\UserType;
 use App\Entities\ActivityType;
 use App\Entities\Regulation;
 use App\Entities\Course;
-use App\Entities\Request;
+use App\Entities\Solicitation;
 
 class SisgacDatabaseSeeder extends Seeder
 {
@@ -103,7 +103,7 @@ class SisgacDatabaseSeeder extends Seeder
         factory(App\Entities\Activity::class, 10)->create();
 
 
-        Request::create([
+        Solicitation::create([
             'name' => 'Maria de Jesus',
             'matricula' => 12345678912345,
             'email' => 'maria@maria.com',
@@ -113,7 +113,7 @@ class SisgacDatabaseSeeder extends Seeder
             'id_curso' => App\Entities\Course::all()->random()->id,
         ]);
 
-        Request::create([
+        Solicitation::create([
             'name' => 'Joao Batista',
             'matricula' => 12345678912348,
             'email' => 'joao@joao.com',

@@ -57,11 +57,11 @@ Route::delete('usuario/{id}/destroy','UsersController@destroy');
 
 //=========================================Routes_Requests=========================================================================
 
-Route::get('solicitacao/list','RequestsController@index');
-Route::get('solicitacao/{id}/show','RequestsController@show');
-Route::post('solicitacao/create','RequestsController@store');
-Route::put('solicitacao/{id}/update','RequestsController@update');
-Route::delete('solicitacao/{id}/destroy','RequestsController@destroy');
+Route::get('solicitacao/list','SolicitationsController@index');
+Route::get('solicitacao/{id}/show','SolicitationsController@show');
+Route::post('solicitacao/create','SolicitationsController@store');
+Route::put('solicitacao/{id}/update','SolicitationsController@update');
+Route::delete('solicitacao/{id}/destroy','SolicitationsController@destroy');
 
 
 
