@@ -11,6 +11,7 @@ use App\Http\Requests\SolicitationCreateRequest;
 use App\Http\Requests\SolicitationUpdateRequest;
 use App\Repositories\SolicitationRepository;
 use App\Validators\SolicitationValidator;
+use App\Entities\User;
 
 
 class SolicitationsController extends Controller
@@ -147,7 +148,7 @@ class SolicitationsController extends Controller
      *
      * @return Response
      */
-    public function update(SolicitationUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {
@@ -155,6 +156,22 @@ class SolicitationsController extends Controller
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $solicitation = $this->repository->update($request->all(), $id);
+
+          //  dd($solicitation->status) ;
+
+            if($solicitation->status == 1){
+                User::create([
+                    'name' => $request['name'],
+                    'matricula' => $request['matricula'],
+                    'email' => $request['email'],
+                    'cpf' => $request['cpf'],
+                    'password' => bcrypt($request['password']),
+                    'status' => $request['status'],
+                    'id_curso' => $request['id_curso']
+                ]);
+            }else {
+                return 'erro';
+            }
 
             $response = [
                 'message' => 'Solicitation updated.',
