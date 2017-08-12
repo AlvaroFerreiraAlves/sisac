@@ -18,6 +18,8 @@ class CreateCoursesTable extends Migration
             $table->string('nome');
             $table->longText('descricao');
             $table->integer('carga_horaria_atividades');
+            $table->integer('id_professor');
+            $table->integer('id_coordenador');
             $table->boolean('status');
             $table->timestamps();
 		});

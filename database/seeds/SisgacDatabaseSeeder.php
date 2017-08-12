@@ -30,6 +30,8 @@ class SisgacDatabaseSeeder extends Seeder
             'nome' => 'Sistemas de Informação',
             'descricao' => 'Sistemas de Informação',
             'carga_horaria_atividades' => '100',
+            'id_professor' => 1,
+            'id_coordenador' => 1,
             'status' => '1',
         ]);
 
@@ -37,6 +39,8 @@ class SisgacDatabaseSeeder extends Seeder
             'nome' => 'Gestão de Tecnologia de Informção',
             'descricao' => 'Gestão de Tecnologia de Informção',
             'carga_horaria_atividades' => '150',
+            'id_professor' => 2,
+            'id_coordenador' => 2,
             'status' => '1',
         ]);
 
