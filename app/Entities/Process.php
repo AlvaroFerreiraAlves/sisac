@@ -10,6 +10,6 @@ class Process extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $fillable = [];
+    protected $fillable = ['id_professor','id_coordenador','matricula','situacao','status','id_regulamento','id_usuario','id_curso_usuario'];
 
 }

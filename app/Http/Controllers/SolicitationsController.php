@@ -12,6 +12,8 @@ use App\Http\Requests\SolicitationUpdateRequest;
 use App\Repositories\SolicitationRepository;
 use App\Validators\SolicitationValidator;
 use App\Entities\User;
+use App\Entities\Process;
+use App\Entities\Course;
 
 
 class SolicitationsController extends Controller
@@ -160,18 +162,32 @@ class SolicitationsController extends Controller
           //  dd($solicitation->status) ;
 
             if($solicitation->status == 1){
-                User::create([
-                    'name' => $request['name'],
-                    'matricula' => $request['matricula'],
-                    'email' => $request['email'],
-                    'cpf' => $request['cpf'],
-                    'password' => bcrypt($request['password']),
-                    'status' => $request['status'],
-                    'id_curso' => $request['id_curso']
+               $user = User::create([
+                    'name' => $solicitation->name,
+                    'matricula' => $solicitation->matricula,
+                    'email' => $solicitation->email,
+                    'cpf' => $solicitation->cpf,
+                    'password' => bcrypt($solicitation->password),
+                    'status' => $solicitation->status,
+                    'id_curso' => $solicitation->id_curso
                 ]);
             }else {
                 return 'erro';
             }
+            $curso = Course::find($user->id_curso);
+
+            Process::create([
+                'id_professor' => $curso->id_professor,
+                'id_coordenador' => $curso->id_coordenador,
+                'matricula' => $user->matricula,
+                'situacao' => 'criado',
+                'status' => 1,
+                'id_regulamento' => 1,
+                'id_usuario' => $user->id,
+                'id_curso_usuario' => $user->id_curso,
+            ]);
+
+
 
             $response = [
                 'message' => 'Solicitation updated.',
