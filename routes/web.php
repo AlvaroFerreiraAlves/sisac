@@ -55,7 +55,7 @@ Route::post('usuario/create','UsersController@store');
 Route::put('usuario/{id}/update','UsersController@update');
 Route::delete('usuario/{id}/destroy','UsersController@destroy');
 
-//=========================================Routes_Requests=========================================================================
+//=========================================Routes_Solicitations=========================================================================
 
 Route::get('solicitacao/list','SolicitationsController@index');
 Route::get('solicitacao/{id}/show','SolicitationsController@show');
@@ -63,6 +63,18 @@ Route::post('solicitacao/create','SolicitationsController@store');
 Route::put('solicitacao/{id}/update','SolicitationsController@update');
 Route::delete('solicitacao/{id}/destroy','SolicitationsController@destroy');
 
+//=========================================Routes_Processes=========================================================================
 
+Route::get('processsos/list','ProcessesController@index');
+Route::get('processsos/{id}/show','ProcessesController@show');
+Route::post('processsos/create','ProcessesController@store');
+Route::put('processsos/{id}/update','ProcessesController@update');
+Route::delete('processsos/{id}/destroy','ProcessesController@destroy');
 
+//=========================================Routes_Activities=========================================================================
 
+Route::get('atividades/list','ActivitiesController@index');
+Route::get('atividades/{id}/show','ActivitiesController@show');
+Route::post('atividades/create','ActivitiesController@store');
+Route::put('atividades/{id}/update','ActivitiesController@update');
+Route::delete('atividades/{id}/destroy','ActivitiesController@destroy');
