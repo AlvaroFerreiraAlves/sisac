@@ -10,6 +10,6 @@ class Activity extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $fillable = [];
+    protected $fillable = ['titulo','descricao','documento','qt_horas','status','situacao','id_tipo_atividade','id_processo'];
 
 }

@@ -75,6 +75,6 @@ Route::delete('processsos/{id}/destroy','ProcessesController@destroy');
 
 Route::get('atividades/list','ActivitiesController@index');
 Route::get('atividades/{id}/show','ActivitiesController@show');
-Route::post('atividades/create','ActivitiesController@store');
+Route::post('atividades/{id}/create','ActivitiesController@store');
 Route::put('atividades/{id}/update','ActivitiesController@update');
 Route::delete('atividades/{id}/destroy','ActivitiesController@destroy');

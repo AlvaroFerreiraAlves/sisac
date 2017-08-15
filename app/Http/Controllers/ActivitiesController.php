@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Process;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -60,14 +61,25 @@ class ActivitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ActivityCreateRequest $request)
+    public function store(Request $request, $id)
     {
 
+
         try {
+            $processo = Process::find($id);
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $activity = $this->repository->create($request->all());
+            $activity = $this->repository->create([
+                'titulo' => $request['titulo'],
+                'descricao' => $request['descricao'],
+                'documento' => $request['documento'],
+                'qt_horas' => $request['qt_horas'],
+                'status' => $request['status'],
+                'situacao' => $request['situacao'],
+                'id_tipo_atividade' => $request['id_tipo_atividade'],
+                'id_processo' => $processo->id
+            ]);
 
             $response = [
                 'message' => 'Activity created.',
@@ -139,7 +151,7 @@ class ActivitiesController extends Controller
      *
      * @return Response
      */
-    public function update(ActivityUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         try {

@@ -60,7 +60,7 @@ class ProcessesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(ProcessCreateRequest $request)
+    public function store(Request $request)
     {
 
         try {
